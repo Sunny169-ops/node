@@ -2,6 +2,8 @@ const express = require('express');
 
 const app = express();
 
+var PORT = process.env.PORT || 3000;
+
 var bodyParser = require('body-parser');
 var encoder = bodyParser.urlencoded();
 
@@ -41,6 +43,6 @@ app.post('/', encoder, (req, res)=>{
 
 })
 
-app.listen(3000, ()=>{
+app.listen(PORT, ()=>{
     console.log('listening on 3000');
 })
