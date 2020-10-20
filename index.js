@@ -5,7 +5,8 @@ const app = express();
 var PORT = process.env.PORT || 3000;
 
 var bodyParser = require('body-parser');
-var encoder = bodyParser.urlencoded();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const user = require('./models/users');
 
@@ -21,13 +22,15 @@ const mongoose = require('mongoose')
 
 app.set('view engine', 'ejs');
 
+// <--------  Api ------------>
+
 app.get('/', (req, res)=>{
  
     res.render('Home')
 
 })
 
-app.post('/', encoder, (req, res)=>{
+app.post('/', (req, res)=>{
     const data = new user({
         _id: new mongoose.Types.ObjectId(),
         firstname:req.body.firstname,
@@ -39,10 +42,10 @@ app.post('/', encoder, (req, res)=>{
         console.warn(result)
     
     }).catch(err=>console.warn(err))
-    res.render('Home',)
+    res.send(data)
 
 })
 
 app.listen(PORT, ()=>{
-    console.log('listening on 3000');
+    console.log('listening on 3000')
 })
